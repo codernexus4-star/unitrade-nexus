@@ -1,0 +1,69 @@
+{
+  "expo": {
+    "name": "UniTrade",
+    "slug": "unitrade-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "description": "UniTrade is a campus marketplace connecting university students to buy and sell products within their community. Browse thousands of items, list products instantly, and connect with fellow students safely.",
+    "primaryColor": "#003366",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#003366"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.unitrade.mobile",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#003366"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ],
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.unitrade.mobile"
+    },
+    "ios": {
+      "bundleIdentifier": "com.unitrade.mobile",
+      "buildNumber": "1.0.0",
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSCameraUsageDescription": "UniTrade needs access to your camera to take photos of products you want to sell.",
+        "NSPhotoLibraryUsageDescription": "UniTrade needs access to your photo library to select product images for your listings.",
+        "NSPhotoLibraryAddUsageDescription": "UniTrade needs permission to save product images to your photo library."
+      },
+      "appStoreUrl": "https://apps.apple.com/app/unitrade/id123456789"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "UniTrade needs access to your photos to upload product images.",
+          "cameraPermission": "UniTrade needs access to your camera to take product photos."
+        }
+      ],
+      "expo-secure-store"
+    ],
+    "privacy": "public",
+    "extra": {
+      "privacyPolicyUrl": "https://unitrade.com/privacy",
+      "termsOfServiceUrl": "https://unitrade.com/terms",
+      "supportEmail": "support@unitrade.com"
+    }
+  }
+}
