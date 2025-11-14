@@ -27,9 +27,9 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-6!*77m!wllj^5xr(2&#
 PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY', 'your-paystack-secret-key-here')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 
 # Application definition
@@ -234,19 +234,20 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email backend (Zoho Mail SMTP)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.zoho.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'support@unitradegh.com'
-EMAIL_HOST_PASSWORD = '@UniTrade2025'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'support@unitradegh.com'
+# Email backend (Zoho Mail SMTP) - configurable via environment variables
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.zoho.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'support@unitradegh.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 
 CSRF_TRUSTED_ORIGINS = [
     'https://unitradegh-backend-946167918479.europe-west1.run.app',
     'https://unitradegh-frontend-946167918479.europe-west1.run.app',
     'https://unitradegh.com',
+    'https://unitrade-nexus.onrender.com',
     'http://localhost:8000',
     'http://localhost:3000',
     'http://127.0.0.1:8000',

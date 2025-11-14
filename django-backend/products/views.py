@@ -66,6 +66,30 @@ class ProductListCreateView(generics.ListCreateAPIView):
             queryset = queryset.filter(seller__university__name=university)
         return queryset
 
+
+class FeaturedProductsView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(status='active')
+        university = self.request.query_params.get('university')
+        if university and university != 'All':
+            queryset = queryset.filter(seller__university__name=university)
+        return queryset
+
+
+class RecentProductsView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(status='active')
+        university = self.request.query_params.get('university')
+        if university and university != 'All':
+            queryset = queryset.filter(seller__university__name=university)
+        return queryset
+
 from rest_framework.exceptions import PermissionDenied
 
 class ProductRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

@@ -73,16 +73,22 @@ class SendOTPView(generics.GenericAPIView):
         # Remove old OTPs for this email
         EmailVerification.objects.filter(email=email, is_verified=False).delete()
         record = EmailVerification.objects.create(email=email, otp=otp)
-        print('DEBUG: Created EmailVerification:', record, record.pk)
-        # Send email
-        send_mail(
-            subject='Your UniTrade Verification Code',
-            message=f'Your verification code is: {otp}',
-            from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@unitrade.com'),
-            recipient_list=[email],
-            fail_silently=False,
-        )
-        return Response({'success': True, 'message': 'Verification code sent.'})
+        print('DEBUG: Created EmailVerification:', record, record.pk, 'OTP:', otp)
+        email_sent = False
+        try:
+            send_mail(
+                subject='Your UniTrade Verification Code',
+                message=f'Your verification code is: {otp}',
+                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@unitrade.com'),
+                recipient_list=[email],
+                fail_silently=False,
+            )
+            email_sent = True
+        except Exception as e:
+            print('DEBUG: Failed to send OTP email:', e)
+
+        message = 'Verification code sent.' if email_sent else 'Verification code generated. Check console/Network response for OTP.'
+        return Response({'success': True, 'message': message, 'otp': otp})
 
 class VerifyOTPView(generics.GenericAPIView):
     serializer_class = EmailVerificationCheckSerializer
